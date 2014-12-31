@@ -8,7 +8,7 @@
     noteStore = client.getNoteStore();
 
   noteStore.findNotesMetadata(filter, 0, 100, metaFilter, function(err, notesMeta) {
-    if(err){
+    if (err) {
       console.error('err',err);
       return;
     }

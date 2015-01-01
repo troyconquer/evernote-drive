@@ -9,6 +9,9 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "evernote": "^1.25.3"
+    "evernote": "^1.25.3",
+    "google-spreadsheets": "^0.3.0",
+    "googleclientlogin": "^0.2.8",
+    "underscore": "^1.7.0"
   }
 }

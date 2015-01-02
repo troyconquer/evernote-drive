@@ -20,11 +20,9 @@
         next(err);
       }
 
-      var noteStrings = _.chain(notesMeta.notes)
-        .map(function(note) {
+      var noteStrings = _.map(notesMeta.notes, function(note) {
           return [note.guid, note.title || 'fake-title', note.created || '01-01-2015', 0];
-        })
-        .value();
+        });
 
       //attach headers so it is more readable csv
       var noteCsv = [['id','title','date','amount']].concat(noteStrings);

@@ -18,10 +18,14 @@
     function insertRow (err, spreadsheet) {
       if (err) next(err);
 
-      _.each(csvData, function (row, index) {
-        var sheetRow = {};
-        sheetRow[index+1] = row;
-        console.log('sheetRow',sheetRow);
+      _.each(csvData, function (row, j) {
+        var sheetRow = {},
+          cells = _.reduce(row, function(memo, cell, i){ //map each item in array to a column
+            memo[i+1] = cell;
+            return memo;
+          }, {});
+
+        sheetRow[j+1] = cells; //map those columned cells to a row
         spreadsheet.add(sheetRow);
       });
 

@@ -22,13 +22,12 @@
 
       var noteStrings = _.chain(notesMeta.notes)
         .map(function(note) {
-          return [note.guid, note.title || 'fake-title', note.created || '01-01-2015', 0].join(',');
+          return [note.guid, note.title || 'fake-title', note.created || '01-01-2015', 0];
         })
         .value();
 
       //attach headers so it is more readable csv
-      var noteCsv = ['id,title,date,amount'].concat(noteStrings);
-
+      var noteCsv = [['id','title','date','amount']].concat(noteStrings);
       next(null, noteCsv);
     });
   }

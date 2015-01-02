@@ -2,14 +2,14 @@
   'use strict';
 
   var _ = require('underscore'),
-    sheetId = process.env.SHEET_ID || '1XdznP3_6rZE0AAuYraWlqxrJd6NK80yoYY_gCChwNOk',
+    sheetId = process.env.SHEET_ID || 'FAKE_SHEET',
     Spreadsheet = require('edit-google-spreadsheet');
 
   function uploadCsv (csvData, next) {
     Spreadsheet.load({
       debug: true,
       // spreadsheetName: '2014 Receipts - Evernote',
-      spreadsheetId: '1XdznP3_6rZE0AAuYraWlqxrJd6NK80yoYY_gCChwNOk',
+      spreadsheetId: sheetId,
       worksheetId: 'od6',
       username: process.env.G_EMAIL || 'BAD_EMAIL',
       password: process.env.G_PASS || 'BAD_PASS'

@@ -1,32 +1,37 @@
 (function(){
   'use strict';
 
-  var GoogleClientLogin = require('googleclientlogin').GoogleClientLogin,
-    GoogleSpreadsheets = require('google-spreadsheets'),
-    googleAuth = new GoogleClientLogin({
-      email: process.env.G_EMAIL,
-      password: process.env.G_PASS,
-      service: 'spreadsheets',
-      accountType: GoogleClientLogin.accountTypes.google
-    });
+  var _ = require('underscore'),
+    sheetId = process.env.SHEET_ID || '1XdznP3_6rZE0AAuYraWlqxrJd6NK80yoYY_gCChwNOk',
+    Spreadsheet = require('edit-google-spreadsheet');
 
-  googleAuth.on(GoogleClientLogin.events.login, function (err, login) {
-    console.log('here');
-    console.log(err);
-    console.log(login);
-    // GoogleSpreadsheets({
-    //   key: process.env.G_KEY,
-    //   auth: googleAuth.getAuthId()
-    // }, function(err, spreadsheet) {
-    //   spreadsheet.worksheets[0].cells({
-    //     range: 'R1C1:R5C6'
-    //   }, function(err, cells) {
-    //     // bleh!
-    //   });
-    // });
-  });
+  function uploadCsv (csvData, next) {
+    Spreadsheet.load({
+      debug: true,
+      // spreadsheetName: '2014 Receipts - Evernote',
+      spreadsheetId: '1XdznP3_6rZE0AAuYraWlqxrJd6NK80yoYY_gCChwNOk',
+      worksheetId: 'od6',
+      username: process.env.G_EMAIL || 'BAD_EMAIL',
+      password: process.env.G_PASS || 'BAD_PASS'
+    }, insertRow);
 
-  googleAuth.login();
+    function insertRow (err, spreadsheet) {
+      if (err) throw err;
 
+      _.each(csvData, function (row, index) {
+        sheetRow = {};
+        sheetRow[index+1] = row;
+        console.log('sheetRow',sheetRow);
+        spreadsheet.add(sheetRow);
+      });
+
+      spreadsheet.send(function (err) {
+        if(err) throw err;
+        console.log("Updated Cell at row 3, column 5 to 'hello!'");
+      });
+    }
+  }
+
+  module.exports.uploadCsv = uploadCsv;
 
 })();

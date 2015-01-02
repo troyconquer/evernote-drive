@@ -9,6 +9,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "edit-google-spreadsheet": "^0.2.13",
     "evernote": "^1.25.3",
     "google-spreadsheets": "^0.3.0",
     "googleclientlogin": "^0.2.8",

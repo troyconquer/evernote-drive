@@ -8,27 +8,31 @@
     client = new Evernote.Client({token: developerToken}),
     noteStore = client.getNoteStore();
 
-  noteStore.findNotesMetadata(filter, 0, 100, metaFilter, function(err, notesMeta) {
-    if (err) {
-      console.error('err',err);
-      return;
-    }
+  function createCsv() {
+    noteStore.findNotesMetadata(filter, 0, 100, metaFilter, function(err, notesMeta) {
+      if (err) {
+        console.error('err',err);
+        return;
+      }
 
-    if (!notesMeta.notes) {
-      console.error('Error: no notes found!');
-      return;
-    }
+      if (!notesMeta.notes) {
+        console.error('Error: no notes found!');
+        return;
+      }
 
-    var noteStrings = _.chain(notesMeta.notes)
-      .map(function(note) {
-        return [note.guid, note.title, note.created, 0].join(',');
-      })
-      .value();
+      var noteStrings = _.chain(notesMeta.notes)
+        .map(function(note) {
+          return [note.guid, note.title || 'fake-title', note.created || '01-01-2015', 0].join(',');
+        })
+        .value();
 
-    //attach headers so it is more readable csv
-    var noteCsv = ['id,title,date,amount'].concat(noteStrings);
+      //attach headers so it is more readable csv
+      var noteCsv = ['id,title,date,amount'].concat(noteStrings);
 
-    console.log('noteCsv',noteCsv);
-  });
+      return noteCsv;
+    });
+  }
+
+  module.exports.creatCsv = createCsv;
 
 })();

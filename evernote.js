@@ -33,6 +33,6 @@
     });
   }
 
-  module.exports.creatCsv = createCsv;
+  module.exports.createCsv = createCsv;
 
 })();

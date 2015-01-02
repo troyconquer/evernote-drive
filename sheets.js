@@ -19,13 +19,14 @@
       if (err) next(err);
 
       _.each(csvData, function (row, index) {
-        sheetRow = {};
+        var sheetRow = {};
         sheetRow[index+1] = row;
         console.log('sheetRow',sheetRow);
         spreadsheet.add(sheetRow);
       });
 
       spreadsheet.send(function (err) {
+        //errors here!! bah!
         if(err) next(err);
         console.log('Updated sheet');
         next();

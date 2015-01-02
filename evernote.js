@@ -8,16 +8,16 @@
     client = new Evernote.Client({token: developerToken}),
     noteStore = client.getNoteStore();
 
-  function createCsv() {
+  function createCsv(next) {
     noteStore.findNotesMetadata(filter, 0, 100, metaFilter, function(err, notesMeta) {
       if (err) {
         console.error('err',err);
-        return;
+        next(err);
       }
 
       if (!notesMeta.notes) {
         console.error('Error: no notes found!');
-        return;
+        next(err);
       }
 
       var noteStrings = _.chain(notesMeta.notes)
@@ -29,7 +29,7 @@
       //attach headers so it is more readable csv
       var noteCsv = ['id,title,date,amount'].concat(noteStrings);
 
-      return noteCsv;
+      next(null, noteCsv);
     });
   }
 
